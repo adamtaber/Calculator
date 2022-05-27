@@ -9,6 +9,45 @@
     <script src="script.js" defer></script>
 </head>
 <body>
-    
+    <div class="calculator">
+        <div class="textbox">
+            <p id="numberScreen">12345</p>
+        </div>
+        <div class="buttons">
+            <div class="misc">
+                <button id="clear">C</button>
+                <button id="negative">+/-</button>
+                <button id="percentage">%</button>
+            </div>
+            <div class="numeric">
+                <button id="nine">9</button>
+                <button id="eight">8</button>
+                <button id="seven">7</button>
+                <button id="six">6</button>
+                <button id="five">5</button>
+                <button id="four">4</button>
+                <button id="three">3</button>
+                <button id="two">2</button>
+                <button id="one">1</button>
+                <button id="decimal">.</button>
+                <button id="zero">0</button>
+            </div>
+            <div class="nonNumeric">
+                <button id="divide">/</button>
+                <button id="multiply">*</button>
+                <button id="subtract">-</button>
+                <button id="add">+</button>
+                <button id="equal">=</button>
+            </div>
+        </div>
+    </div>
+
+
 </body>
 </html>
+
+<!--numbers 0 - 9 and . arranged in a grid
+    symbols: add, subtract, multiply, divide, equal
+    also include: clear, percentage, +/- button
+    box showing live input of numbers and symbols 
+    when hitting an operator, after a 2nd number input, it should calculate the number   -->
