@@ -1,5 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap');
 
+body {
+    display: flex;
+    justify-content: center;
+    padding: 0px;
+}
+
 .calculator {
     display: grid;
     grid-template-columns: 1fr;
@@ -11,6 +17,7 @@
     padding: 30px;
     border-radius: 40px;
     border-style: none;
+    margin-top: 15vh;
 }
 
 .textbox {
@@ -88,6 +95,11 @@ button {
     border-style: none;
     color: white;
     font-weight: 600;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #7e7e7e;
 }
 
 .misc > button {
@@ -95,6 +107,19 @@ button {
     color: black;
 }
 
+.misc > button:hover {
+    background-color: #dddddd;
+}
+
 .nonNumeric > button {
     background-color: #FF8400;
+}
+
+.nonNumeric > button:hover {
+    background-color: #ffaf7a;
+}
+
+.nonNumeric > button:active {
+    background-color: white;
+    color: #FF8400;
 }
