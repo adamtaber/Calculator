@@ -96,10 +96,15 @@ button {
     color: white;
     font-weight: 600;
     cursor: pointer;
+    transition: 0.25s ease-in-out;
 }
 
 button:hover {
     background-color: #7e7e7e;
+}
+
+button:active {
+    background-color: #AAAAAA
 }
 
 .misc > button {
@@ -111,6 +116,10 @@ button:hover {
     background-color: #dddddd;
 }
 
+.misc > button:active {
+    background-color: white;
+}
+
 .nonNumeric > button {
     background-color: #FF8400;
 }
@@ -119,7 +128,12 @@ button:hover {
     background-color: #ffaf7a;
 }
 
-.nonNumeric > button:active {
+/*.nonNumeric > button:active {
+    background-color: white;
+    color: #FF8400;
+}*/
+
+button.activate {
     background-color: white;
     color: #FF8400;
 }

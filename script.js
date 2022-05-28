@@ -1,5 +1,3 @@
-/* create a function for each of the four main operations */
-
 let numberButtons = document.querySelectorAll('div.numeric > button');
 let numberScreen = document.getElementById("numberScreen");
 let clearButton = document.getElementById("clear");
@@ -12,8 +10,7 @@ let valueOne;
 let valueTwo;
 let toggle = false;
 let equalToggle = false;
-
-
+let numberToggle = false;
 
 function add(valueOne, valueTwo) {
     return Number(valueOne) + Number(valueTwo);
@@ -31,7 +28,6 @@ function divide(valueOne, valueTwo) {
     return Number(valueOne) / Number(valueTwo);
 }
 
-/* create operate function */
 
 function operate() {
     if(operator === "+") {
@@ -45,71 +41,114 @@ function operate() {
     }
 }
 
+
 numberButtons.forEach(btn => btn.addEventListener('click', function() {
-    if(toggle === true) {
+    if(numberToggle === true) {
         numberScreen.innerText = "";
         for (i = 0; i < operatorButtons.length; i++ ) {
-            operatorButtons[i].style.backgroundColor = 'rgb(255,132,0)';
-            operatorButtons[i].style.color = 'white';
+            operatorButtons[i].classList.remove("activate");
+            /*operatorButtons[i].style.backgroundColor = 'rgb(255,132,0)';
+            operatorButtons[i].style.color = 'white';*/
         }
+        numberToggle = false;
+    }
+    if(equalToggle === true) {
+        valueOne = 0;
+        valueTwo = 0;
+        operator = 0;
+        toggle = false;
     }
     numberScreen.innerText += this.innerText;
     clearButton.innerHTML = "C"
     equalToggle = false;
 }))
 
+
 clearButton.addEventListener('click', function() {
     numberScreen.innerText = "";
-    valueOne = 0;
-    valueTwo = 0;
-    operator = 0;
+    valueOne = null;
+    valueTwo = null;
+    operator = null;
     this.innerText = "AC"
     toggle = false;
     equalToggle = false;
+    numberToggle = false;
     for (i = 0; i < operatorButtons.length; i++ ) {
-        operatorButtons[i].style.backgroundColor = 'rgb(255,132,0)';
-        operatorButtons[i].style.color = 'white';
+        operatorButtons[i].classList.remove("activate");
+        /*operatorButtons[i].style.backgroundColor = 'rgb(255,132,0)';
+        operatorButtons[i].style.color = 'white';*/
     }
 })
 
+negativeButton.addEventListener('click', function() {
+    numberScreen.innerText = `${numberScreen.innerText * (-1)}`;
+})
 
+percentageButton.addEventListener('click', function() {
+    numberScreen.innerText = `${numberScreen.innerText / 100}`
+})
 
 operatorButtons.forEach(btn => btn.addEventListener('click', function () {
     if(equalToggle === true) {
         operator = this.innerText;
         valueOne = numberScreen.innerText;
         toggle = true;
-        this.style.backgroundColor = 'white';
-        this.style.color = 'rgb(255,132,0)';
+        this.classList.add("activate")
+        /*this.style.backgroundColor = 'white';
+        this.style.color = 'rgb(255,132,0)';*/
         equalToggle = false;
+        numberToggle = true;
     }else if(toggle === false) {
         operator = this.innerText;
         valueOne = numberScreen.innerText;
-        /*toggle = operatorClass.toggle("true")
-        if(toggle) {*/
         toggle = true;
-        this.style.backgroundColor = 'white';
-        this.style.color = 'rgb(255,132,0)';
+        this.classList.add("activate")
+        /*this.style.backgroundColor = 'white';
+        this.style.color = 'rgb(255,132,0)';*/
+        numberToggle = true;
     }else if(toggle === true) {
         valueTwo = numberScreen.innerText;
-        numberScreen.innerText = operate();
+        if(operator === "/" && valueTwo === "0") {
+            numberScreen.innerText = "hey, stop that";
+            return;
+        }
+        if((Math.round((operate() + Number.EPSILON) * 1000)/1000) > 99999999999) {
+            numberScreen.innerText = (operate() + Number.EPSILON).toExponential(3);
+        }else if((Math.round((operate() + Number.EPSILON) * 1000)/1000) < 99999999999) {
+        numberScreen.innerText = Math.round(operate() * 1000)/1000;
+        }
         operator = this.innerText;
         valueOne = numberScreen.innerText;
-        this.style.backgroundColor = 'white';
-        this.style.color = 'rgb(255,132,0)';
+        this.classList.add("activate")
+        /*this.style.backgroundColor = 'white';
+        this.style.color = 'rgb(255,132,0)';*/
+        numberToggle = true;
 
     }
 }))
+
 
 equalButton.addEventListener('click', function () {
     if(equalToggle === true) {
         return;
     }else if(equalToggle === false) {
         valueTwo = numberScreen.innerText;
-        numberScreen.innerText = operate();
+        if(operator === "/" && valueTwo === "0") {
+            numberScreen.innerText = "hey, stop that";
+            return;
+        }
+        if(valueTwo === null || valueOne === null || operator === null) {
+            return;
+        }
+        if((Math.round((operate() + Number.EPSILON) * 1000)/1000) > 99999999999) {
+            numberScreen.innerText = (operate() + Number.EPSILON).toExponential(3);
+        }else if((Math.round((operate() + Number.EPSILON) * 1000)/1000) < 99999999999) {
+        numberScreen.innerText = Math.round((operate() + Number.EPSILON) * 1000)/1000;
+        }
         valueOne = numberScreen.innerText;
         toggle = true;
         equalToggle = true;
+        numberToggle = true;
     }
 })
 
