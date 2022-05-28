@@ -1,24 +1,22 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap');
 
+
 body {
     display: flex;
     justify-content: center;
     padding: 0px;
-    height: 100vh;
-    height: calc(var(--vh, 1vh) * 100);
 }
 
 .calculator {
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: 1fr 5fr;
-    height: 70vh;
-    width: 32vw;
+    height: 600px;
+    width: 400px;
     gap: 10px;
     background-color: black;
-    /*padding: 30px;*/
+    padding: 30px;
     border-radius: 40px;
-    padding: 2vh;
     border-style: none;
     margin-top: 15vh;
 }
@@ -45,7 +43,7 @@ body {
     grid-template-columns: repeat(4, 1fr);
     grid-template-rows: repeat(5, 1fr);
     justify-items: stretch;
-    gap: 1vh;
+    gap: 10px;
 }
 
 .misc {
@@ -56,7 +54,7 @@ body {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(1, 1fr);
-    gap: 1vh;
+    gap: 10px;
 }
 
 .numeric {
@@ -68,7 +66,7 @@ body {
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(4, 1fr);
     direction: rtl;
-    gap: 1vh;
+    gap: 10px;
 }
 
 #zero {
@@ -87,7 +85,7 @@ body {
     display: grid;
     grid-template-columns: repeat(1, 1fr);
     grid-template-rows: repeat(5, 1fr);
-    gap: 1vh;
+    gap: 10px;
 }
 
 button {
