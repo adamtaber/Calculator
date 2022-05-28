@@ -1,24 +1,39 @@
 /* create a function for each of the four main operations */
 
+let numberButtons = document.querySelectorAll('div.numeric > button');
+let numberScreen = document.getElementById("numberScreen");
+let clearButton = document.getElementById("clear");
+let operatorButtons = document.querySelectorAll('div.nonNumeric > button.operator');
+let equalButton = document.getElementById("equal");
+let negativeButton = document.getElementById("negative");
+let percentageButton = document.getElementById("percentage");
+let operator;
+let valueOne;
+let valueTwo;
+let toggle = false;
+let equalToggle = false;
+
+
+
 function add(valueOne, valueTwo) {
-    return valueOne + valueTwo;
+    return Number(valueOne) + Number(valueTwo);
 }
 
 function subtract(valueOne, valueTwo) {
-    return valueOne - valueTwo;
+    return Number(valueOne) - Number(valueTwo);
 }
 
 function multiply(valueOne, valueTwo) {
-    return valueOne * valueTwo;
+    return Number(valueOne) * Number(valueTwo);
 }
 
 function divide(valueOne, valueTwo) {
-    return valueOne / valueTwo;
+    return Number(valueOne) / Number(valueTwo);
 }
 
 /* create operate function */
 
-function operate(valueOne, operator, valueTwo) {
+function operate() {
     if(operator === "+") {
         return add(valueOne, valueTwo);
     }else if (operator === "-") {
@@ -30,84 +45,79 @@ function operate(valueOne, operator, valueTwo) {
     }
 }
 
-/* create function to populate textbox when buttons are pressed */
-
-let numberButtons = document.querySelectorAll('div.numeric > button');
-let numberScreen = document.getElementById("numberScreen");
-let clearButton = document.getElementById("clear");
-
 numberButtons.forEach(btn => btn.addEventListener('click', function() {
-    numberScreen.innerHTML += this.innerHTML;
+    if(toggle === true) {
+        numberScreen.innerText = "";
+        for (i = 0; i < operatorButtons.length; i++ ) {
+            operatorButtons[i].style.backgroundColor = 'rgb(255,132,0)';
+            operatorButtons[i].style.color = 'white';
+        }
+    }
+    numberScreen.innerText += this.innerText;
+    clearButton.innerHTML = "C"
+    equalToggle = false;
 }))
 
 clearButton.addEventListener('click', function() {
-    numberScreen.innerHTML = "";
+    numberScreen.innerText = "";
+    valueOne = 0;
+    valueTwo = 0;
+    operator = 0;
+    this.innerText = "AC"
+    toggle = false;
+    equalToggle = false;
+    for (i = 0; i < operatorButtons.length; i++ ) {
+        operatorButtons[i].style.backgroundColor = 'rgb(255,132,0)';
+        operatorButtons[i].style.color = 'white';
+    }
 })
 
-let displayValue = numberScreen.innerHTML;
 
-let operatorButtons = document.querySelectorAll('div.nonNumeric > button');
-let operator;
-let operatorAdd = document.querySelector("div.nonNumeric > .add");
-let operatorClass = operatorAdd.classList;
-/*let operatorSubtract = document.querySelector("div.nonNumeric > .subtract");
-let operatorClassSubtract = operatorSubtract.classList;
-let operatorMultiply = document.querySelector("div.nonNumeric > .multiply");
-let operatorClassMultiply = operatorMultiply.classList;
-let operatorDivide = document.querySelector("div.nonNumeric > .divide");
-let operatorClassDivide = operatorDivide.classList;*/
-let toggle;
 
 operatorButtons.forEach(btn => btn.addEventListener('click', function () {
-    operator = this.innerHTML;
-    toggle = operatorClass.toggle("true")
-    if(toggle) {
+    if(equalToggle === true) {
+        operator = this.innerText;
+        valueOne = numberScreen.innerText;
+        toggle = true;
         this.style.backgroundColor = 'white';
-            this.style.color = 'rgb(255,132,0)'
-    }else {
-        this.style.backgroundColor = 'rgb(255,132,0)'
-        this.style.color = 'white';
+        this.style.color = 'rgb(255,132,0)';
+        equalToggle = false;
+    }else if(toggle === false) {
+        operator = this.innerText;
+        valueOne = numberScreen.innerText;
+        /*toggle = operatorClass.toggle("true")
+        if(toggle) {*/
+        toggle = true;
+        this.style.backgroundColor = 'white';
+        this.style.color = 'rgb(255,132,0)';
+    }else if(toggle === true) {
+        valueTwo = numberScreen.innerText;
+        numberScreen.innerText = operate();
+        operator = this.innerText;
+        valueOne = numberScreen.innerText;
+        this.style.backgroundColor = 'white';
+        this.style.color = 'rgb(255,132,0)';
+
     }
-    /*if(this.innerHTML === "+") {
-        operator = "+";
-        toggle = operatorClass.toggle("True")
-        if(toggle) {
-            this.style.backgroundColor = 'white';
-            this.style.color = 'rgb(255,132,0)'
-        }else {
-            this.style.backgroundColor = 'rgb(255,132,0)'
-            this.style.color = 'white';
-        }
-    }else if(this.innerHTML === "-") {
-        operator = "-";
-        toggle = operatorClass.toggle("testTwo")
-        if(toggle) {
-            this.style.backgroundColor = 'white';
-            this.style.color = 'rgb(255,132,0)'
-        }else {
-            this.style.backgroundColor = 'rgb(255,132,0)'
-            this.style.color = 'white';
-        }
-    }else if(this.innerHTML === "*") {
-        operator = "*";
-        toggle = operatorClass.toggle("testTwo")
-        if(toggle) {
-            this.style.backgroundColor = 'white';
-            this.style.color = 'rgb(255,132,0)'
-        }else {
-            this.style.backgroundColor = 'rgb(255,132,0)'
-            this.style.color = 'white';
-        }
-    }else if(this.innerHTML === "/") {
-        operator = "/";
-        toggle = operatorClass.toggle("testTwo")
-        if(toggle) {
-            this.style.backgroundColor = 'white';
-            this.style.color = 'rgb(255,132,0)'
-        }else {
-            this.style.backgroundColor = 'rgb(255,132,0)'
-            this.style.color = 'white';
-        }
-    }*/
 }))
+
+equalButton.addEventListener('click', function () {
+    if(equalToggle === true) {
+        return;
+    }else if(equalToggle === false) {
+        valueTwo = numberScreen.innerText;
+        numberScreen.innerText = operate();
+        valueOne = numberScreen.innerText;
+        toggle = true;
+        equalToggle = true;
+    }
+})
+
+
+
+/* number: display as string
+operator: set valueOne (toggle: false), toggle to true and register operator
+number: display as string
+equal: setValueTwo (toggle: true), perform operation
+operator2: setValueTwo (toggle: true), perform operation and input to screen, setValueOne*/
 

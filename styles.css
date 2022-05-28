@@ -123,3 +123,8 @@ button:hover {
     background-color: white;
     color: #FF8400;
 }
+
+#equal:active {
+    background-color: white;
+    color: #FF8400;
+}
